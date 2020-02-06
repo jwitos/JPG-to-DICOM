@@ -28,12 +28,6 @@ else:
 # Name for saved DICOM
 dicomized_filename = str(uuid.uuid4()) + '.dcm'
 
-# Generate required UID metatags
-SOPClassUID = generate_uid()
-SOPInstanceUID = generate_uid()
-StudyInstanceUID = generate_uid()
-SeriesInstanceUID = generate_uid()
-
 # Create DICOM from scratch
 ds = Dataset()
 ds.file_meta = Dataset()
