@@ -5,17 +5,22 @@ from PIL import Image
 import numpy
 import uuid
 
+# Your input file here
+INPUT_FILE = ##########
+
+# Name for output DICOM
+dicomized_filename = str(uuid.uuid4()) + '.dcm'
+
 # Load image with Pillow
-img = Image.open(self.f)
+img = Image.open(INPUT_FILE)
 width, height = img.size
 print("File format is {} and size: {}, {}".format(img.format, width, height))
 
-# Handling PNG and BMP files
-# Pillow conversion to RGB
+# Convert PNG and BMP files
 if img.format == 'PNG' or img.format == 'BMP':
     img = img.convert('RGB')
 
-# Handling multiple image modes (types/depth of pixels)
+# Convert image modes (types/depth of pixels)
 # Docs: https://pillow.readthedocs.io/en/3.1.x/handbook/concepts.html
 if img.mode == 'L':
     np_frame = ds.PixelData = np_frame.tobytes()
@@ -24,9 +29,6 @@ elif img.mode == 'RGBA' or img.mode == 'RGB':
 else:
     print("Unknown image mode")
     return
-
-# Name for saved DICOM
-dicomized_filename = str(uuid.uuid4()) + '.dcm'
 
 # Create DICOM from scratch
 ds = Dataset()
@@ -40,7 +42,6 @@ ds.PatientName = 'Created'
 
 ds.Rows = img.height
 ds.Columns = img.width
-#ds.PhotometricInterpretation = "MONOCHROME1"
 ds.PhotometricInterpretation = "YBR_FULL_422"
 if np_frame.shape[1] == 3:
     ds.SamplesPerPixel = 3
